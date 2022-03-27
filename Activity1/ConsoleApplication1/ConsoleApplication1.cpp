@@ -1,25 +1,66 @@
 #include <stdio.h>
 #include <string>
-std::string getAString() {
-	return "This is a string";
-}
-int main() {
-	std::string str = getAString();
-	printf("%s", str.c_str()); // print a string using c_str()
+#include <set>
+#include <cmath>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-	int selection = 0;
-	printf("Enter a choice (1-3): ");
-	scanf("%d", &selection); // read from the keyboard
-	printf("You chose %d", selection);
+int main()
+{
+    int value;
+    int number;
+    int erase;
+    int conf;
+    bool loop = true;
 
-	int val = 0;
-	int read = scanf("%d", &val);
-	if (read == 1) { // success
-		printf("idk");
+    std::vector <int> integers = {};
+    printf("Enter 5 unique digits :");
+    for (int i = 0; i < 5; i++)
+    {
+        std::cin >> value;
+        integers.insert(integers.begin() + i, { value });
 
-	char tmp[128];
-	scanf(“%128s”, tmp);
-	std::string result{ tmp };
+    }
+    printf("the Values are: ");
+    for (auto& str : integers) std::cout << str << ' ';
+    {
+        std::cout << '\n';
+    }
+    printf("Enter a number:");
+    std::cin >> number;
+    int cnt;
+    cnt = count(integers.begin(), integers.end(), number);
 
-	return 0;
+    std::cout << "Number " << number << " occurs " << cnt << " times." << std::endl;
+
+    printf("Enter a number to erase:");
+    std::cin >> erase;
+    cnt = count(integers.begin(), integers.end(), erase);
+    while (loop) {
+        std::cout << "Number " << erase << " occurs " << cnt << " times. Would you like to erase it? (0 | 1)" << std::endl;
+        std::cin >> conf;
+        if (conf == 1) {
+
+            for (auto ele = integers.begin(); ele != integers.end(); ele++)
+            {
+                if (*ele == erase) {
+                    integers.erase(ele--);
+                }
+
+            }
+            loop = false;
+        }
+        else if (conf == 0) {
+            std::cout << "Erase caneled!";
+            loop = false;
+        }
+        else {
+            std::cout << "Invalid option\n";
+        }
+    }
+    std::cout << "The values of the vector after remove:\n";
+    for (int const& i : integers) {
+        std::cout << i << ' ';
+    }
 }
